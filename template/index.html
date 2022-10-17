@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>BGP Tests</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body style="background: #fff;">
+ <div class="login">
+	<h1>Run Tests</h1>
+
+    <form action="{{ url_for('login')}}"method="post">
+		<input type="checkbox" name="setup" id="setup" value="True" onclick="return  ValidateSelection();">
+        <label for="setup">Setup</label>
+		<br>
+		<input type="checkbox" name="verify" id="cleanup" value="True" onclick="return  ValidateSelection();">
+        <label for="cleanup">cleanup</label>
+		<br>
+		<input type="checkbox" name="test" id="test" value="True" onclick="return  ValidateSelection();">
+        <label for="test">test bgp</label>
+		<br>
+		<br>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Submit</button>
+    </form>
+
+   <br>
+   <br>
+   {{ entered_values }}
+
+ </div>
+
+
+</body>
+</html>
