@@ -1,5 +1,5 @@
 *** Settings ***
-Library        lib/SSHConnector.py
+Library        ../lib/SSHConnector.py
 
 
 *** Test Case ***
