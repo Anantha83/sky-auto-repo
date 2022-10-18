@@ -16,14 +16,17 @@
 	<h1>Run Tests</h1>
 
     <form action="{{ url_for('login')}}"method="post">
-		<input type="checkbox" name="setup" id="setup" value="True" onclick="return  ValidateSelection();">
+		<input type="Radio" name="test" id="setup" value="setup" onclick="return  ValidateSelection();">
         <label for="setup">Setup</label>
 		<br>
-		<input type="checkbox" name="verify" id="cleanup" value="True" onclick="return  ValidateSelection();">
+		<input type="Radio" name="test" id="cleanup" value="cleanup" onclick="return  ValidateSelection();">
         <label for="cleanup">cleanup</label>
 		<br>
-		<input type="checkbox" name="test" id="test" value="True" onclick="return  ValidateSelection();">
-        <label for="test">test bgp</label>
+		<input type="Radio" name="test" id="test" value="test" onclick="return  ValidateSelection();">
+        <label for="test">test</label>
+		<br>
+		<input type="Radio" name="test" id="all" value="all" onclick="return  ValidateSelection();">
+        <label for="all">all</label>
 		<br>
 		<br>
         <button type="submit" class="btn btn-primary btn-block btn-large">Submit</button>
