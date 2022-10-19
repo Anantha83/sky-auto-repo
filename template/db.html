@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{% block title %} test_data {% endblock %}</h1>
+    <div class="content">
+        {% for data in test_data %}
+            <div class="data">
+                <p><b>#{{ data.id }}</b></p>
+                <b>
+                    <p class="name">{{ data.selected_option }}</p>
+                </b>
+                <p>Status: {{ data.result }}</p>
+                <p>Created: {{ data.created_at }}</p
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
