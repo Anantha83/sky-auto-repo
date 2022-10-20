@@ -7,4 +7,10 @@ It has UI that gets the details from user about configuration and sends rest API
 
     User -----HTTP/REST/CLI----> [Your Automation Program] ---Netconf/Cli-----> Device
 
+Below is the device topology.
+Topology created using GNS3
+LoopBack Network Adapter created to reach the instance inside the GNS3 tool
+
+![Topology](https://github.com/Anantha83/sky-auto-repo/blob/main/images/topology.png)
+
 Thanks for reading! ☺
