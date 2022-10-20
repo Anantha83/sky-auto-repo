@@ -1,42 +1,32 @@
 *** Settings ***
-Library        ../lib/SSHConnector.py
+Resource          keywords.resource
 
+*** Variables ***
+${ROUTER1}
+${ROUTER2}
+${DEVICE_TYPE}
 
 *** Test Case ***
+Login to Device  
+  R1 login  ${ROUTER1}  ${DEVICE_TYPE}  ${PORT}  ${R1_USER}  ${R1_PASS}  ${SECRET_PASS}
+  R2 login  ${ROUTER2}  ${DEVICE_TYPE}  ${PORT}  ${R2_USER}  ${R1_PASS}  ${SECRET_PASS}
 
+verify BGP Session Success
+  verify bgp R1  ${ROUTER1}  Success
 
-Connect to Routers and Confgiure BGP Test 
-  configure bgp R1  10.1.1.10  100  100  11.1.1.11  cisco
-  configure bgp R2  10.1.1.11  100  100  11.1.1.10  cisco
-  
-  
+Connect to Routers and Configure different Password in R1
+  configure bgp R1  ${ROUTER1}  ${R1_ASN}  ${R2_ASN}  ${R2_BGP_INTF_IP}  ${TEST_INCORRECT_PASS}
+
+Clear BGP Session on R1
+  clear bgp command R1  ${ROUTER1}
+
+verify BGP Session Failure
+  verify bgp R1  ${ROUTER1}  Failure
+
+Connect to Routers and Configure old Password in R1
+  configure bgp R1  ${ROUTER1}  ${R1_ASN}  ${R2_ASN}  ${R2_BGP_INTF_IP}  ${TEST_INCORRECT_PASS}
+    
 Connect to Routers and unconfigure BGP Test
-  unconfigure bgp R1  10.1.1.10  100
-  unconfigure bgp R2  10.1.1.11  100
-  
-
-*** Keywords ***
-configure bgp R1
-  [Arguments]        ${arg1}  ${arg2}  ${arg3}  ${arg4}  ${arg5}
-  ${result}          configure bgp  ${arg1}  ${arg2}  ${arg3}  ${arg4}  ${arg5}
-  Log To Console     ${result}}
-configure bgp R2
-  [Arguments]        ${arg1}  ${arg2}  ${arg3}  ${arg4}  ${arg5}
-  ${result}          configure bgp  ${arg1}  ${arg2}  ${arg3}  ${arg4}  ${arg5}
-  Log To Console     ${result}}
-unconfigure bgp R1
-  [Arguments]        ${arg1}  ${arg2}
-  ${result}          unconfigure bgp  ${arg1}  ${arg2}
-  Log To Console     ${result}}
-unconfigure bgp R2
-  [Arguments]        ${arg1}  ${arg2}
-  ${result}          unconfigure bgp  ${arg1}  ${arg2}
-  Log To Console     ${result}}
-verify bgp R1
-  [Arguments]        ${arg1}  ${arg2}
-  ${result}          verify bgp  ${arg1}  ${arg2}
-  Log To Console     ${result}}
-clear bgp command R1
-  [Arguments]        ${arg1}
-  ${result}          clear bgp session  ${arg1}
+  unconfigure bgp R1  ${ROUTER1}  ${R1_ASN}
+  unconfigure bgp R2  ${ROUTER2}  ${R2_ASN}
   

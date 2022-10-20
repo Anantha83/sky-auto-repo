@@ -7,15 +7,26 @@
 <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" -->
 
 </head>
 
-<body style="background: #123;">
+<body style="background: #fff;">
  <div class="login">
 	<h1>Run Tests</h1>
 
     <form action="{{ url_for('login')}}"method="post">
+	    Router IP1: <input type="text" name="r1_ip">
+		<br>
+		<br>
+		Router IP2: <input type="text" name="r2_ip">
+		<br>
+		<br>
+		Device Type: <select name="device_type">
+		    <option value="cisco_ios">Cisco IoS</option>
+		</select>
+		<br>
+		<br>
 		<input type="Radio" name="test" id="setup" value="setup" onclick="return  ValidateSelection();">
         <label for="setup">Setup</label>
 		<br>

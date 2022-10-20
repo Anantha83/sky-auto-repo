@@ -20,7 +20,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-
+# Defining Database Entries
 class TrackTestStatus(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,14 +46,17 @@ def dbase():
 def login():
    if request.method == 'POST':
       selection = request.form.get('test')
-      
+      r1_ip = request.form['r1_ip']
+      r2_ip = request.form['r2_ip']
+      device_type = request.form['device_type']
       
       #cmd = "robot --timestampoutputs --log '/app/static/mylog.html' --report '/app/static/report.html' "
-      cmd = ['robot', '--log', 'static/mylog.html', '--report', 'static/report.html']
+      cmd = ['robot', '--log', 'static/mylog.html', '--report', 'static/report.html',\
+            '--variable', f'ROUTER1:{r1_ip}', '--variable', f'ROUTER2:{r2_ip}',\
+            '--variable', f'DEVICE_TYPE:{device_type}']
       
       file = f'tests/{selection}.robot'
       cmd.append(file)
-      LOG.info(f'db object : {db}')
       db.create_all()
 
      
@@ -62,22 +65,17 @@ def login():
          LOG.info(f'Capturing robot testcase {cmd[0]} execution output : {output}')
          #Writing the contents to DB
          entry = TrackTestStatus(selected_option = selection, result = output)
-         LOG.info(f'DB Selection : entry.selected_option')
-         LOG.info(f'DB result  : entry.result')
-         LOG.info(f'DB ID  : entry.id')
          db.session.add(entry)
          db.session.commit()
          return redirect(url_for('static',filename='report.html'))
-      except Exception as e:
-         LOG.info(f'Capturing exception seen while executing robot file {cmd[0]} : {e}')
-         entry = TrackTestStatus(selected_option = selection, result = "error")
+      except subprocess.CalledProcessError as e:
+         LOG.info(f'Capturing exception seen while executing robot file {cmd} : {e.returncode}')
+         #Writing the contents to DB during Exception
+         entry = TrackTestStatus(selected_option = selection, result = e.returncode)
          db.session.add(entry)
          db.session.commit()
          return render_template('index.html',entered_values = f"Exception Occurred : {e}" )
 
-   else:
-      user = request.args.get('nm')
-      return redirect(url_for('success',name = user))
 
 if __name__ == '__main__':
    app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 8080))
