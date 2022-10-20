@@ -1,4 +1,7 @@
 *** Settings ***
+Documentation     A test suite for verifying BGP MD5 with matching and mismatching password.
+...
+...               Keywords are imported from the resource file
 Resource          keywords.resource
 
 *** Variables ***

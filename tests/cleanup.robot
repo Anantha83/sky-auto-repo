@@ -1,4 +1,7 @@
 *** Settings ***
+Documentation     A test suite for unconfiguring BGP MD5 already configured by setup file.
+...
+...               Keywords are imported from the resource file
 Resource          keywords.resource
 
 *** Variables ***

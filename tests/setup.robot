@@ -1,4 +1,7 @@
 *** Settings ***
+Documentation     A test suite for configuring BGP MD5 on routers.
+...
+...               Keywords are imported from the resource file
 Resource          keywords.resource
 
 *** Variables ***
